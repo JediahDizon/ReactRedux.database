@@ -2,20 +2,15 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    
     <!-- Database connection settings -->
     <property name="connection.driver_class">org.sqlite.JDBC</property>
     <property name="connection.url">jdbc:sqlite:Goals.db?createDatabaseIfNotExist=true</property>
-    
     <!-- SQL dialect -->
     <property name="dialect">org.hibernate.dialect.Oracle8iDialect</property>
-    
     <!-- Echo all executed SQL to stdout -->
     <property name="show_sql">true</property>
-
     <!-- Schema -->
     <property name="hibernate.hbm2ddl.auto">create</property>
-
     <!-- Use Annotation-based mapping metadata -->
     <mapping class="entity.Goal"/>
   </session-factory>

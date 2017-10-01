@@ -7,11 +7,17 @@ public class Goal {
 	private Long timestamp;
 	
 	public Goal() {}
+	public Goal(String title, String description) {
+		this.id = null;
+		this.title = title;
+		this.description = description;
+		this.timestamp = System.currentTimeMillis();
+	}
 	public Goal(Long id, String title, String description, Long timestamp) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.timestamp = timestamp != null ? timestamp : System.currentTimeMillis();
+		this.timestamp = timestamp;
 	}
 	
 	public Long getId() {
