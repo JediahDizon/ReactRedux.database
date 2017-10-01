@@ -43,16 +43,20 @@ public class Goals extends HttpServlet {
 				Session session = HibernateUtil.getSessionFactory().openSession();
 				session.beginTransaction();
 				
+				List<Goal> allGoals = new ArrayList();
 				String[] parameterValues = request.getParameterValues("id");
 				
-				List<Goal> allGoals = new ArrayList();
-				for(String parameterValue : parameterValues) {
-					allGoals.add((Goal) session.get(Goal.class, Long.parseLong(parameterValue)));
+				if(parameterValues != null && parameterValues.length != 0) {
+					for(String parameterValue : parameterValues) {
+						Goal toAdd = (Goal) session.get(Goal.class, Long.parseLong(parameterValue));
+						if(toAdd != null)
+							allGoals.add(toAdd);
+					}
+				} else {
+					allGoals = session.createCriteria(Goal.class).list();	
 				}
 				
-//				List<Goal> allGoals = session.createCriteria(Goal.class).list();
 				out.println(new Gson().toJson(allGoals));
-				
 				session.close();
 			} catch (Exception error) {
 				error.printStackTrace();
