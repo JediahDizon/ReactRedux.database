@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import entity.Goal;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/Goals"})
@@ -38,12 +39,18 @@ public class Goals extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		try (PrintWriter out = response.getWriter()) {
 			response.setHeader("Access-Control-Allow-Origin", "*");
-			
 			try {
 				Session session = HibernateUtil.getSessionFactory().openSession();
 				session.beginTransaction();
 				
-				List<Goal> allGoals = session.createCriteria(Goal.class).list();
+				String[] parameterValues = request.getParameterValues("id");
+				
+				List<Goal> allGoals = new ArrayList();
+				for(String parameterValue : parameterValues) {
+					allGoals.add((Goal) session.get(Goal.class, Long.parseLong(parameterValue)));
+				}
+				
+//				List<Goal> allGoals = session.createCriteria(Goal.class).list();
 				out.println(new Gson().toJson(allGoals));
 				
 				session.close();
